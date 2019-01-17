@@ -39,6 +39,7 @@ public class Game extends JFrame implements Runnable{
 	private Chick chick2;
 	private Cow cow2;
 	private Farmernpc farmernpc;
+	private Farmernpc farmernpc2;
 	
 	private KeyBoardListener keyListener = new KeyBoardListener(this);
 	private MouseEventListener mouseListener = new MouseEventListener(this);
@@ -52,7 +53,7 @@ public class Game extends JFrame implements Runnable{
 	
 	public Game() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("APPLE TOWN Version:Alpha 1.1.1");
+		setTitle("APPLE TOWN Version:Alpha 1.1.2");
 		setBounds(0,0, SCREENX, SCREENY);
 		setLocationRelativeTo(null);
 
@@ -86,7 +87,7 @@ public class Game extends JFrame implements Runnable{
 		AnimatedSprite chickAnimations2 = new AnimatedSprite(chickSheet, 10);
 		AnimatedSprite cowAnimations2 = new AnimatedSprite(cowSheet, 20);
 		AnimatedSprite farmernpcAnimations = new AnimatedSprite(farmernpcSheet, 10);
-		
+
 		tiles = new Tiles(new File("./src/tilefile.txt"), sheet);
 		map = new Map(new File("./src/Map.txt"), tiles);
 	
@@ -121,7 +122,10 @@ public class Game extends JFrame implements Runnable{
 		cow = new Cow(cowAnimations);
 		cow2 = new Cow(cowAnimations2);
 		farmernpc = new Farmernpc(farmernpcAnimations);
-		objects = new GameObject[7];
+		farmernpc2 = new Farmernpc(farmernpcAnimations);
+		farmernpc.setcoord(-170 , -635);
+		farmernpc2.setcoord(-1438,426);
+		objects = new GameObject[8];
 		objects[6] = player;
 		objects[5] = gui;
 		objects[2] = chick;
@@ -129,6 +133,7 @@ public class Game extends JFrame implements Runnable{
 		objects[4] = chick2;
 		objects[1] = cow2;
 		objects[0] = farmernpc;
+		objects[7] = farmernpc2;
 		
 		
 		

@@ -7,7 +7,7 @@ public class Player implements GameObject{
 	//3 down
 	private Rectangle playerRectangle;
 	private int direction = 0;
-	private int speed = 3;
+	private int speed = 10;
 	private Sprite sprite;
 	private AnimatedSprite animatedSprite = null;
 	
@@ -25,6 +25,10 @@ public class Player implements GameObject{
 		if(animatedSprite != null) {
 			animatedSprite.setAnimatedRange(direction * 8, (direction * 8) + 7);
 		}
+	}
+	
+	private void printCoords() {
+		System.out.println(playerRectangle.x + "," + playerRectangle.y);
 	}
 	
 	public void render(RenderHandler renderer, int xZoom, int yZoom) {
@@ -69,6 +73,10 @@ public class Player implements GameObject{
 		if(keyListener.interact()) {
 			newDirection = 4;
 			didMove = true;
+		}
+		
+		if(keyListener.Coord()) {
+			printCoords();
 		}
 		
 		if(newDirection != direction) {
