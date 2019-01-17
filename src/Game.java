@@ -156,7 +156,7 @@ public class Game extends JFrame implements Runnable{
 		BufferedImage formattedImage = new BufferedImage(loadedImage.getWidth(), loadedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
 		formattedImage.getGraphics().drawImage(loadedImage, 0, 0, null);
 		return formattedImage;
-		
+
 		} catch(IOException exception) {
 			exception.printStackTrace();
 			return null;
