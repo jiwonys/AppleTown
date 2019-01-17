@@ -16,7 +16,7 @@ public class Farmernpc implements GameObject {
 	
 	public void render(RenderHandler renderer, int xZoom, int yZoom) {
 		if(animatedSprite != null) {
-		renderer.renderSprite(animatedSprite, 1000 + farmernpcRectangle.x , -100 + farmernpcRectangle.y, xZoom, yZoom,false);
+		renderer.renderSprite(animatedSprite, -190 + farmernpcRectangle.x , -635 + farmernpcRectangle.y, xZoom, yZoom,false);
 	}else if(sprite != null){
 		renderer.renderSprite(sprite, farmernpcRectangle.x , farmernpcRectangle.y, xZoom, yZoom,false);
 	}

@@ -14,6 +14,7 @@ import java.lang.Runnable;
 import java.lang.Thread;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.imageio.*;
 
 public class Game extends JFrame implements Runnable{
@@ -47,7 +48,7 @@ public class Game extends JFrame implements Runnable{
 	private int yZoom = 3;
 	private int selectedTileID = 2;
 	private int SCREENX = (int) screenSize.getWidth();
-	private int SCREENY = (int) screenSize.getHeight() - 100;
+	private int SCREENY = (int) screenSize.getHeight()-50;
 	
 	public Game() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -93,21 +94,34 @@ public class Game extends JFrame implements Runnable{
 		GUIButton[] buttons = new GUIButton[tiles.size()];
 		Sprite[] tileSprites = tiles.getSprites();
 		
+		/*GUI BUTTON INTERFACE
+		 * |
+		 * |
+		 * |
+		 * V
+		 */
+		
 		for(int i = 0; i < buttons.length; i++){
-			Rectangle tileRectangle = new Rectangle(0, i*(16*xZoom + 2), 16*xZoom, 16*yZoom);
+			if(i * 50 < SCREENX) {
+			Rectangle tileRectangle = new Rectangle(i*(16*xZoom + 1), 0, 16*xZoom, 16*yZoom);
 			buttons[i] = new SDKButton(this, i, tileSprites[i], tileRectangle);
+			}else if(i * 50 < SCREENX*2 + 50) {
+				Rectangle tileRectangle = new Rectangle((i - (SCREENX / 50))*(16*xZoom + 1)- 51, 49 , 16*xZoom, 16*yZoom);
+				buttons[i] = new SDKButton(this, i, tileSprites[i], tileRectangle);
+			}else if(i * 50 < SCREENX*3 + 50) {
+				Rectangle tileRectangle = new Rectangle((i - (SCREENX*2 / 50))*(16*xZoom + 1)- 102, 49*2 , 16*xZoom, 16*yZoom);
+				buttons[i] = new SDKButton(this, i, tileSprites[i], tileRectangle);
+			}
 		}
 
-		
 		GUI gui = new GUI(buttons, 0,0, true);
-		objects = new GameObject[7];
 		player = new Player(playerAnimations);
 		chick = new Chick(chickAnimations);
 		chick2 = new Chick(chickAnimations2);
 		cow = new Cow(cowAnimations);
 		cow2 = new Cow(cowAnimations2);
 		farmernpc = new Farmernpc(farmernpcAnimations);
-		
+		objects = new GameObject[7];
 		objects[6] = player;
 		objects[5] = gui;
 		objects[2] = chick;
@@ -115,6 +129,7 @@ public class Game extends JFrame implements Runnable{
 		objects[4] = chick2;
 		objects[1] = cow2;
 		objects[0] = farmernpc;
+		
 		
 		
 		canvas.addKeyListener(keyListener);
@@ -184,7 +199,7 @@ public class Game extends JFrame implements Runnable{
 			for(int i = 0; i < objects.length; i++) {
 				objects[i].render(renderer, xZoom, yZoom);
 			}
-
+			
 			renderer.render(graphics);
 
 			graphics.dispose();

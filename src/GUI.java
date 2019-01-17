@@ -12,7 +12,7 @@ public class GUI implements GameObject{
 
 		rect.x = x;
 		rect.y = y;
-		rect2.x =x ;
+		rect2.x = x;
 		rect2.y = y;
 
 		if(backgroundSprite != null) {

@@ -9,7 +9,7 @@ public abstract class GUIButton implements GameObject
 	
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private int SCREENX = (int) screenSize.getWidth();
-	private int SCREENY = (int) screenSize.getHeight() - 100;
+	private int SCREENY = (int) screenSize.getHeight();
 
 	public GUIButton(Sprite sprite, Rectangle rect, Boolean fixed)
 	{
