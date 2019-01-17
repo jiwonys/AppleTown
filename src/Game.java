@@ -81,10 +81,10 @@ public class Game extends JFrame implements Runnable{
 		
 		AnimatedSprite playerAnimations = new AnimatedSprite(playerSheet, 8);
 		AnimatedSprite chickAnimations = new AnimatedSprite(chickSheet, 10);
-		AnimatedSprite cowAnimations = new AnimatedSprite(cowSheet, 20);
+		AnimatedSprite cowAnimations = new AnimatedSprite(cowSheet, 10);
 		AnimatedSprite chickAnimations2 = new AnimatedSprite(chickSheet, 10);
 		AnimatedSprite cowAnimations2 = new AnimatedSprite(cowSheet, 20);
-		AnimatedSprite farmernpcAnimations = new AnimatedSprite(farmernpcSheet, 5);
+		AnimatedSprite farmernpcAnimations = new AnimatedSprite(farmernpcSheet, 10);
 		
 		tiles = new Tiles(new File("./src/tilefile.txt"), sheet);
 		map = new Map(new File("./src/Map.txt"), tiles);

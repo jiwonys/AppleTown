@@ -26,7 +26,7 @@ public class Cow implements GameObject {
 	}
 	
 	public int randomDirection() {
-		return (int)(Math.random() * 7 + 1);
+		return (int)(Math.random() * 5 + 1);
 	}
 	
 	public void render(RenderHandler renderer, int xZoom, int yZoom) {
@@ -75,16 +75,6 @@ public class Cow implements GameObject {
 		
 		if(value == 5) {//blink
 			newDirection = 4;
-			didMove = true;
-		}
-		
-		if(value == 6) {//eatright
-			newDirection = 5;
-			didMove = true;
-		}
-		
-		if(value == 7) {//eatleft
-			newDirection = 6;
 			didMove = true;
 		}
 		
