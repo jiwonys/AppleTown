@@ -7,6 +7,9 @@ public class Chick implements GameObject {
 	private Sprite sprite;
 	private int counter = 120;
 	private int value = 0;
+	private int health = 50;
+	private boolean dead = false;
+	private boolean hurt = false;
 	private AnimatedSprite animatedSprite = null;
 	
 	public Chick(Sprite sprite) {
@@ -15,7 +18,7 @@ public class Chick implements GameObject {
 			animatedSprite = (AnimatedSprite) sprite;
 		}
 		updateDirection();
-		chickRectangle = new Rectangle(16,16,16,16);
+		chickRectangle = new Rectangle(0,0,16,16);
 		chickRectangle.generateGraphics(3, 0xFF00FF90);
 	}
 	
@@ -25,11 +28,24 @@ public class Chick implements GameObject {
 		}
 	}
 	
+	public Rectangle getRectangle() {
+		return chickRectangle;
+	}
 	public int randomDirection() {
 		return (int)(Math.random() * 7 + 1);
 	}
+	public void hurt() {
+		health = health - 20;
+		hurt = true;
+		health = health - 20;
+		//hurt 20
+		if (health <= 0) {
+			dead = true;
+		}
+	}
 	
 	public void render(RenderHandler renderer, int xZoom, int yZoom) {
+		if(dead == false) {
 		if(animatedSprite != null) {
 		renderer.renderSprite(animatedSprite, chickRectangle.x , chickRectangle.y, xZoom, yZoom,false);
 	}else if(sprite != null){
@@ -39,73 +55,22 @@ public class Chick implements GameObject {
 		renderer.renderRectangle(chickRectangle, xZoom, yZoom,false);
 	}
 	}
-	
-	/*public void update(Game game, int previous, int counter) {
-		
-		int value = randomDirection();
-		boolean didMove = false;
-		int newDirection = direction;
-		
-		if(value <= 1 && previous == 0 || previous == 1) {
-			newDirection = 0;
-			chickRectangle.x -= speed;
-			didMove = true;
-			counter++;
-			if(counter == 10) {
-				animatedSprite.update(game, 0, 0);
-			}
-			value = randomDirection();
-			animatedSprite.update(game, 1, counter);
-			
-		}
-		
-		if(value == 2 && previous == 0 || previous == 2) {
-			newDirection = 1;
-			chickRectangle.x += speed;	
-			didMove = true;
-			counter++;
-			if(counter == 10){
-			animatedSprite.update(game,0,0);
-			}
-			value = randomDirection();
-			animatedSprite.update(game,2, counter);
-		}
-		
-		if(value == 3 && previous == 0 || previous == 3) {
-			newDirection = 3;
-			chickRectangle.y -= speed;	
-			didMove = true;
-			counter++;
-			if(counter == 10){
-			animatedSprite.update(game,0,0);
-			}
-			value = randomDirection();
-			animatedSprite.update(game,3, counter);
-		}
-		if(value == 4 && previous == 0 || previous == 4) {
-			newDirection = 2;
-			chickRectangle.y += speed;	
-			didMove = true;
-			counter++;
-			if(counter == 10){
-			animatedSprite.update(game,0,0);
-			}
-			value = randomDirection();
-			animatedSprite.update(game,4, counter);
-		}
-		
-		if(newDirection != direction) {
-			direction = newDirection;
-			updateDirection();
-		}
-	
-		
 	}
-	*/
+	
+	public int getX() {
+		return chickRectangle.x;
+	}
+	public int getY() {
+		return chickRectangle.y;
+	}
+	
 	public void update(Game game) {
 		if(counter == 120) {
 			value = randomDirection();
 			counter = 0;
+			if(hurt == true) {
+				value = 8;
+			}
 		}
 		
 		boolean didMove = false;
@@ -148,6 +113,12 @@ public class Chick implements GameObject {
 		if(value == 7) {//eatleft
 			newDirection = 6;
 			didMove = true;
+		}
+		
+		if(value == 8) {//eatleft
+			newDirection = 7;
+			didMove = true;
+			hurt = false;
 		}
 		
 		if(newDirection != direction) {

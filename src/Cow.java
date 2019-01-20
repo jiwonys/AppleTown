@@ -7,6 +7,9 @@ public class Cow implements GameObject {
 	private Sprite sprite;
 	private int counter = 160;
 	private int value = 0;
+	private int health = 100;
+	private boolean dead = false;
+	private boolean hurt = false;
 	private AnimatedSprite animatedSprite = null;
 	
 	public Cow(Sprite sprite) {
@@ -15,7 +18,7 @@ public class Cow implements GameObject {
 			animatedSprite = (AnimatedSprite) sprite;
 		}
 		updateDirection();
-		cowRectangle = new Rectangle(32,32,32,32);
+		cowRectangle = new Rectangle(0,0,32,32);
 		cowRectangle.generateGraphics(3, 0xFF00FF90);
 	}
 	
@@ -28,8 +31,22 @@ public class Cow implements GameObject {
 	public int randomDirection() {
 		return (int)(Math.random() * 5 + 1);
 	}
+	public Rectangle getRectangle() {
+		return cowRectangle;
+	}
+	public void hurt() {
+		hurt = true;
+		direction = 5;
+		health = health - 20;
+		if (health == 0) {
+			dead = true;
+		}
+		//hurt 20
+	}
+	
 	
 	public void render(RenderHandler renderer, int xZoom, int yZoom) {
+		if(dead == false) {
 		if(animatedSprite != null) {
 		renderer.renderSprite(animatedSprite, cowRectangle.x , cowRectangle.y, xZoom, yZoom,false);
 	}else if(sprite != null){
@@ -39,11 +56,27 @@ public class Cow implements GameObject {
 		renderer.renderRectangle(cowRectangle, xZoom, yZoom,false);
 	}
 	}
+	}
+	
+	public int getX() {
+		return cowRectangle.x;
+	}
+	public int getY() {
+		return cowRectangle.y;
+	}
 	
 	public void update(Game game) {
 		if(counter == 160) {
+			
 			value = randomDirection();
 			counter = 0;
+			if(hurt == true) {	
+			value = 6;
+			}
+		}
+		
+		if(health == 0) {
+			dead = true;
 		}
 		
 		boolean didMove = false;
@@ -76,6 +109,12 @@ public class Cow implements GameObject {
 		if(value == 5) {//blink
 			newDirection = 4;
 			didMove = true;
+		}
+		
+		if(value == 6) {
+			newDirection = 5;
+			didMove = true;
+			hurt = false;
 		}
 		
 		if(newDirection != direction) {

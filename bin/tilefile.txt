@@ -96,3 +96,14 @@ house16-16-5
 house16-16-6
 house16-16-7
 house16-16-8
+chest-4-1
+barrel-4-2
+soil-1-6
+soil-2-6
+soil-3-6
+soil-1-7
+soil-2-7
+soil-3-7
+soil-1-8
+soil-2-8
+soil-3-8

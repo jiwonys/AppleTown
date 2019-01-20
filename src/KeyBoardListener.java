@@ -61,7 +61,12 @@ int keyCode = event.getKeyCode();
 	}
 	
 	public boolean interact() {
+		
 		return keys[KeyEvent.VK_I];
+	}
+	
+	public boolean shoot() {
+		return keys[KeyEvent.VK_K];
 	}
 	
 }
