@@ -30,9 +30,7 @@ public class GUI implements GameObject{
 	public void render(RenderHandler renderer, int xZoom, int yZoom){
 		if(backgroundSprite != null) {
 				renderer.renderSprite(backgroundSprite, rect.x, rect.y, xZoom, yZoom, fixed);
-			}	
-
-			if(buttons != null) {
+			}if(buttons != null) {
 				for(int i = 0; i < buttons.length; i++) {
 					buttons[i].render(renderer, xZoom, yZoom, rect);
 				}

@@ -9,6 +9,7 @@ public class Player implements GameObject{
 	private int direction = 0;
 	private int speed = 3;
 	private Sprite sprite;
+	private int health;
 	private AnimatedSprite animatedSprite = null;
 	
 	public Player() {}
@@ -28,6 +29,9 @@ public class Player implements GameObject{
 		}
 	}
 	
+	public int gethealth() {
+		return health;
+	}
 	private void printCoords() {
 		System.out.println(playerRectangle.x + "," + playerRectangle.y);
 	}

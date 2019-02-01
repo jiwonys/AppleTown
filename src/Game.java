@@ -31,6 +31,7 @@ public class Game extends JFrame implements Runnable{
 	private SpriteSheet cowSheet;
 	private SpriteSheet farmernpcSheet;
 	private SpriteSheet arrowSheet;
+	private SpriteSheet heartSheet;
 	private Tiles tiles;
 	
 	private Map map;
@@ -42,6 +43,7 @@ public class Game extends JFrame implements Runnable{
 	private Cow cow2;
 	private Farmernpc farmernpc;
 	private Farmernpc farmernpc2;
+	private PlayerHealth playerHealth;
 	private Arrow arrow;
 	private int guicounter;
 	private KeyBoardListener keyListener = new KeyBoardListener(this);
@@ -59,7 +61,7 @@ public class Game extends JFrame implements Runnable{
 	
 	public Game() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("APPLE TOWN Version:Alpha 1.1.2");
+		setTitle("APPLE TOWN Version:Alpha 1.1.3");
 		setBounds(0,0, SCREENX, SCREENY);
 		setLocationRelativeTo(null);
 
@@ -77,19 +79,21 @@ public class Game extends JFrame implements Runnable{
 		BufferedImage cowSheetImage = loadImage("cowwalk.png");
 		BufferedImage farmernpcImage = loadImage("farmer.png");
 		BufferedImage arrowImage = loadImage("arrow.png");
+		BufferedImage playerHeartImage = loadImage("heart.png");
 		
 		playerSheet = new SpriteSheet(playerSheetImage);
 		chickSheet = new SpriteSheet(chickSheetImage);
 		cowSheet = new SpriteSheet(cowSheetImage);
 		farmernpcSheet = new SpriteSheet(farmernpcImage);
 		arrowSheet = new SpriteSheet(arrowImage);
+		heartSheet = new SpriteSheet(playerHeartImage);
 		
 		playerSheet.loadSprites(20,26);
 		chickSheet.loadSprites(16, 16);
 		cowSheet.loadSprites(32,32);
 		farmernpcSheet.loadSprites(16,32);
 		arrowSheet.loadSprites(8, 8);
-		
+		heartSheet.loadSprites(15, 15);
 		
 		AnimatedSprite playerAnimations = new AnimatedSprite(playerSheet, 8);
 		AnimatedSprite chickAnimations = new AnimatedSprite(chickSheet, 10);
@@ -98,6 +102,7 @@ public class Game extends JFrame implements Runnable{
 		AnimatedSprite cowAnimations2 = new AnimatedSprite(cowSheet, 20);
 		AnimatedSprite farmernpcAnimations = new AnimatedSprite(farmernpcSheet, 10);
 		AnimatedSprite arrowAnimations = new AnimatedSprite(arrowSheet, 5);
+		AnimatedSprite heartAnimations = new AnimatedSprite(heartSheet, 10);
 		
 		tiles = new Tiles(new File("./src/tilefile.txt"), sheet);
 		map = new Map(new File("./src/Map.txt"), tiles);
@@ -136,10 +141,13 @@ public class Game extends JFrame implements Runnable{
 		farmernpc = new Farmernpc(farmernpcAnimations);
 		farmernpc2 = new Farmernpc(farmernpcAnimations);
 		arrow = new Arrow(arrowAnimations);
+		playerHealth = new PlayerHealth(heartAnimations);
+		
 		
 		farmernpc.setcoord(-170 , -635);
 		farmernpc2.setcoord(-1438,426);
-		objects = new GameObject[9];
+		objects = new GameObject[10];
+		objects[9] = playerHealth;
 		objects[6] = player;
 		objects[2] = chick;
 		objects[3] = arrow;
@@ -170,6 +178,11 @@ public class Game extends JFrame implements Runnable{
 		//System.out.println("ARROW:" + arrow.getX() + "," + arrow.getY());
 		//System.out.println("Cow1: " + cow.getX() + "," + cow.getY());
 		//System.out.println("Cow2: " + cow2.getX() + "," + cow2.getY());
+		if(keyListener.Hurt()) {
+			playerHealth.setDirection(1);
+		}else {
+			playerHealth.setDirection(0);
+		}
 		
 		if(arrow.getBoolShot() == true && (arrow.getRectangle().intersects(cow.getRectangle()))){
 			arrow.setBoolShot(false);

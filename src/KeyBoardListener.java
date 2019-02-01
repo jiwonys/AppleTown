@@ -59,7 +59,9 @@ int keyCode = event.getKeyCode();
 	public boolean Coord() {
 		return keys[KeyEvent.VK_L];
 	}
-	
+	public boolean Hurt() {
+		return keys[KeyEvent.VK_H];
+	}
 	public boolean interact() {
 		
 		return keys[KeyEvent.VK_I];
