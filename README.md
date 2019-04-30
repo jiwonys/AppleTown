@@ -1,6 +1,6 @@
 # AppleTown
 This is a project of mine, created out of curiosity and my passion to learn more about coding language into GUI, AI's,
-and rendering of pixels in order to create a game.
+and rendering of pixels in order to create a game. This will remain open source, and you're welcome to use any of the code as long as you give credit.
 
 I have added
 :Main character
@@ -16,4 +16,9 @@ ToDo:
 :Main player health, and hunger GUI,
 
 I have drawn everypixel of the pictures in the src file, except for the house sprites.
+
 The biggest challenge for me was to find a way to delay the time in which mobs "thought" about so it won't go crazy and change animations and x,y randomly every pixel.
+
+
+KEYS
+-----
