@@ -197,6 +197,7 @@ public class Game extends JFrame implements Runnable{
 			arrow.setBoolShot(false);
 			chick2.hurt();
 		}
+		//hi
 		
 		
 		
