@@ -5,11 +5,17 @@ and rendering of pixels in order to create a game. This will remain open source,
 FEATURES
 ---------
 :Main character
+
 :Chicken (mob) with 50 health, randomly chooses what it wants to do, cries when hit by arrow
+
 :Cow (mob) with 100 health, randomly chooses what it wants to do, cries when hit by arrow
+
 :Arrow attacking system (actually moves with the character, this was bug at first, but I think it was an interesting to play around with it.
-\n:Map rendering, saving, and editing
+
+:Map rendering, saving, and editing
+
 :Map GUI
+
 :Farmer NPC
 
 TODO
