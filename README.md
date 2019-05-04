@@ -1,5 +1,5 @@
 # AppleTown
-This is a project of mine, created out of curiosity and my passion to learn more about coding language into GUI, AI's,
+This is an open source project, created out of curiosity and my passion to learn more about coding language into GUI, AI's,
 and rendering of pixels in order to create a game.
 
 FEATURES
