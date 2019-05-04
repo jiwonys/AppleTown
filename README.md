@@ -8,9 +8,9 @@ FEATURES
 
 :Chicken (mob) with 50 health, randomly chooses what it wants to do, cries when hit by arrow
 
-:Cow (mob) with 100 health, randomly chooses what it wants to do, cries when hit by arrow
+:Cow (mob) with 100 health, randomly chooses what it wants to do, gets mad when hit by arrow
 
-:Arrow attacking system (actually moves with the character, this was bug at first, but I think it was an interesting to play around with it.
+:Arrow attacking system that can be controlled remotely using w a s d
 
 :Map rendering, saving, and editing
 
@@ -21,7 +21,10 @@ FEATURES
 TODO
 ------
 :Collision checks
+
 :Main player health, and hunger GUI,
+
+:Multiplayer
 
 CHALLENGES
 ------------
