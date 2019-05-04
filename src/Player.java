@@ -9,15 +9,17 @@ public class Player implements GameObject{
 	private int direction = 0;
 	private int speed = 3;
 	private Sprite sprite;
+	private int health;
 	private AnimatedSprite animatedSprite = null;
 	
+	public Player() {}
 	public Player(Sprite sprite) {
 		this.sprite = sprite;
 		if(sprite != null && sprite instanceof AnimatedSprite) {
 			animatedSprite = (AnimatedSprite) sprite;
 		}
 		updateDirection();
-		playerRectangle = new Rectangle(32,16,16,32);
+		playerRectangle = new Rectangle(100,100,20,26);
 		playerRectangle.generateGraphics(3, 0xFF00FF90);
 	}
 	
@@ -25,6 +27,29 @@ public class Player implements GameObject{
 		if(animatedSprite != null) {
 			animatedSprite.setAnimatedRange(direction * 8, (direction * 8) + 7);
 		}
+	}
+	
+	public int gethealth() {
+		return health;
+	}
+	private void printCoords() {
+		System.out.println(playerRectangle.x + "," + playerRectangle.y);
+	}
+	
+	public int getPlayerX() {
+		return playerRectangle.x;
+	}
+	
+	public int getPlayerY() {
+		return playerRectangle.y;
+	}
+	
+	public Rectangle getRectangle() {
+		return playerRectangle;
+	}
+	
+	public int getPlayerdirection() {
+		return direction;
 	}
 	
 	public void render(RenderHandler renderer, int xZoom, int yZoom) {
@@ -66,9 +91,9 @@ public class Player implements GameObject{
 			playerRectangle.y += speed;
 			didMove = true;
 		}
-		if(keyListener.interact()) {
-			newDirection = 4;
-			didMove = true;
+		
+		if(keyListener.Coord()) {
+			printCoords();
 		}
 		
 		if(newDirection != direction) {
@@ -83,6 +108,7 @@ public class Player implements GameObject{
 		updateCamera(game.getRenderer().getCamera());
 		if(didMove) {
 		animatedSprite.update(game);
+		
 		}
 	}
 		

@@ -2,10 +2,9 @@ public class SDKButton extends GUIButton
 {
 	private Game game;
 	private int tileID;
-	private boolean isGreen = false;
+	private boolean isActive = false;
 
-	public SDKButton(Game game, int tileID, Sprite tileSprite, Rectangle rect) 
-	{
+	public SDKButton(Game game, int tileID, Sprite tileSprite, Rectangle rect) {
 		super(tileSprite, rect, true);
 		this.game = game;
 		this.tileID = tileID;
@@ -13,29 +12,22 @@ public class SDKButton extends GUIButton
 	}
 
 	@Override
-	public void update(Game game) 
-	{
-		if(tileID == game.getSelectedTile())
-		{
-			if(!isGreen) 
-			{
-				rect.generateGraphics(0x67FF3D);
-				isGreen = true;
+	public void update(Game game) {
+		if(tileID == game.getSelectedTile()){
+			if(!isActive) {
+				rect.generateGraphics(0xFFDFF);
+				isActive = true;
 			}
-		}
-		else
-		{
-			if(isGreen)
-			{
-				rect.generateGraphics(0x67FF2D);
-				isGreen = false;
+		}else{
+			if(isActive){
+				rect.generateGraphics(0xFFDFFD);
+				isActive = false;
 			}
 		}
 	}
 
 	@Override
-	public void render(RenderHandler renderer, int xZoom, int yZoom, Rectangle interfaceRect)
-	{
+	public void render(RenderHandler renderer, int xZoom, int yZoom, Rectangle interfaceRect){
 		renderer.renderRectangle(rect, interfaceRect, 1, 1, fixed);
 		renderer.renderSprite(sprite, 
 							  rect.x + interfaceRect.x + (xZoom - (xZoom - 1))*rect.w/2/xZoom, 
@@ -46,8 +38,7 @@ public class SDKButton extends GUIButton
 	
 	}
 
-	public void activate()
-	{
+	public void activate(){
 		game.changeTile(tileID);
 	}
 

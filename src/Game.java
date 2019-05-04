@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +30,8 @@ public class Game extends JFrame implements Runnable{
 	private SpriteSheet chickSheet;	
 	private SpriteSheet cowSheet;
 	private SpriteSheet farmernpcSheet;
+	private SpriteSheet arrowSheet;
+	private SpriteSheet heartSheet;
 	private Tiles tiles;
 	
 	private Map map;
@@ -39,9 +42,13 @@ public class Game extends JFrame implements Runnable{
 	private Chick chick2;
 	private Cow cow2;
 	private Farmernpc farmernpc;
-	
+	private Farmernpc farmernpc2;
+	private PlayerHealth playerHealth;
+	private Arrow arrow;
+	private int guicounter;
 	private KeyBoardListener keyListener = new KeyBoardListener(this);
 	private MouseEventListener mouseListener = new MouseEventListener(this);
+	private int i =0;
 	
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private int xZoom = 3;
@@ -50,9 +57,11 @@ public class Game extends JFrame implements Runnable{
 	private int SCREENX = (int) screenSize.getWidth();
 	private int SCREENY = (int) screenSize.getHeight()-50;
 	
+	private boolean on = false;
+	
 	public Game() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("APPLE TOWN Version:Alpha 1.1.1");
+		setTitle("APPLE TOWN Version:Alpha 1.1.3");
 		setBounds(0,0, SCREENX, SCREENY);
 		setLocationRelativeTo(null);
 
@@ -69,16 +78,22 @@ public class Game extends JFrame implements Runnable{
 		BufferedImage chickSheetImage = loadImage("chickwalk.png");
 		BufferedImage cowSheetImage = loadImage("cowwalk.png");
 		BufferedImage farmernpcImage = loadImage("farmer.png");
+		BufferedImage arrowImage = loadImage("arrow.png");
+		BufferedImage playerHeartImage = loadImage("heart.png");
 		
 		playerSheet = new SpriteSheet(playerSheetImage);
 		chickSheet = new SpriteSheet(chickSheetImage);
 		cowSheet = new SpriteSheet(cowSheetImage);
 		farmernpcSheet = new SpriteSheet(farmernpcImage);
+		arrowSheet = new SpriteSheet(arrowImage);
+		heartSheet = new SpriteSheet(playerHeartImage);
+		
 		playerSheet.loadSprites(20,26);
 		chickSheet.loadSprites(16, 16);
 		cowSheet.loadSprites(32,32);
 		farmernpcSheet.loadSprites(16,32);
-		
+		arrowSheet.loadSprites(8, 8);
+		heartSheet.loadSprites(15, 15);
 		
 		AnimatedSprite playerAnimations = new AnimatedSprite(playerSheet, 8);
 		AnimatedSprite chickAnimations = new AnimatedSprite(chickSheet, 10);
@@ -86,6 +101,8 @@ public class Game extends JFrame implements Runnable{
 		AnimatedSprite chickAnimations2 = new AnimatedSprite(chickSheet, 10);
 		AnimatedSprite cowAnimations2 = new AnimatedSprite(cowSheet, 20);
 		AnimatedSprite farmernpcAnimations = new AnimatedSprite(farmernpcSheet, 10);
+		AnimatedSprite arrowAnimations = new AnimatedSprite(arrowSheet, 5);
+		AnimatedSprite heartAnimations = new AnimatedSprite(heartSheet, 10);
 		
 		tiles = new Tiles(new File("./src/tilefile.txt"), sheet);
 		map = new Map(new File("./src/Map.txt"), tiles);
@@ -112,6 +129,7 @@ public class Game extends JFrame implements Runnable{
 				Rectangle tileRectangle = new Rectangle((i - (SCREENX*2 / 50))*(16*xZoom + 1)- 102, 49*2 , 16*xZoom, 16*yZoom);
 				buttons[i] = new SDKButton(this, i, tileSprites[i], tileRectangle);
 			}
+
 		}
 
 		GUI gui = new GUI(buttons, 0,0, true);
@@ -121,16 +139,24 @@ public class Game extends JFrame implements Runnable{
 		cow = new Cow(cowAnimations);
 		cow2 = new Cow(cowAnimations2);
 		farmernpc = new Farmernpc(farmernpcAnimations);
-		objects = new GameObject[7];
+		farmernpc2 = new Farmernpc(farmernpcAnimations);
+		arrow = new Arrow(arrowAnimations);
+		playerHealth = new PlayerHealth(heartAnimations);
+		
+		
+		farmernpc.setcoord(-170 , -635);
+		farmernpc2.setcoord(-1438,426);
+		objects = new GameObject[10];
+		objects[9] = playerHealth;
 		objects[6] = player;
-		objects[5] = gui;
 		objects[2] = chick;
-		objects[3] = cow;
+		objects[3] = arrow;
 		objects[4] = chick2;
 		objects[1] = cow2;
 		objects[0] = farmernpc;
-		
-		
+		objects[7] = farmernpc2;
+		objects[5] = gui;
+		objects[8] = cow;
 		
 		canvas.addKeyListener(keyListener);
 		canvas.addFocusListener(keyListener);
@@ -138,11 +164,56 @@ public class Game extends JFrame implements Runnable{
 		canvas.addMouseMotionListener(mouseListener);
 	}
 
+	public void updateGUI() {
+		if(keyListener.interact() && on == false && guicounter > 0 && guicounter <= 15) {
+			on = true;
+		}else if(keyListener.interact() && on == true && guicounter <= 30 && guicounter > 15){
+			on = false;
+		}
+	}
 	
 	public void update() {
-		for(int i = 0; i < objects.length; i++) {
-			objects[i].update(this);
+		arrow.setArrowXY(player.getPlayerX(), player.getPlayerY());
+		arrow.setArrowDirection(player.getPlayerdirection());
+		//System.out.println("ARROW:" + arrow.getX() + "," + arrow.getY());
+		//System.out.println("Cow1: " + cow.getX() + "," + cow.getY());
+		//System.out.println("Cow2: " + cow2.getX() + "," + cow2.getY());
+		if(keyListener.Hurt()) {
+			playerHealth.setDirection(1);
+		}else {
+			playerHealth.setDirection(0);
 		}
+		
+		if(arrow.getBoolShot() == true && (arrow.getRectangle().intersects(cow.getRectangle()))){
+			arrow.setBoolShot(false);
+			cow.hurt();
+		}else if(arrow.getBoolShot() == true && (arrow.getRectangle().intersects(cow2.getRectangle()))){
+			arrow.setBoolShot(false);
+			cow2.hurt();
+		}else if(arrow.getBoolShot() == true && (arrow.getRectangle().intersects(chick.getRectangle()))){
+			arrow.setBoolShot(false);
+			chick.hurt();
+		}else if(arrow.getBoolShot() == true && (arrow.getRectangle().intersects(chick2.getRectangle()))){
+			arrow.setBoolShot(false);
+			chick2.hurt();
+		}
+		//hi
+		
+		
+		
+		for(int i = 0; i < objects.length; i++) {
+			if(i != 5) {
+			objects[i].update(this);
+			
+			}else {
+				if(on == true) {
+					objects[i].update(this);
+				}
+			}
+			
+		}
+		
+		
 	}
 
 	private BufferedImage loadImage(String path) {
@@ -151,7 +222,7 @@ public class Game extends JFrame implements Runnable{
 		BufferedImage formattedImage = new BufferedImage(loadedImage.getWidth(), loadedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
 		formattedImage.getGraphics().drawImage(loadedImage, 0, 0, null);
 		return formattedImage;
-		
+
 		} catch(IOException exception) {
 			exception.printStackTrace();
 			return null;
@@ -177,7 +248,9 @@ public class Game extends JFrame implements Runnable{
 		{
 			x = (int) Math.floor((x + renderer.getCamera().x)/(16.0 * xZoom));
 			y = (int) Math.floor((y + renderer.getCamera().y)/(16.0 * yZoom));
+			if(on == true) {
 			map.setTile(x, y, selectedTileID);
+			}
 		}
 
 	}
@@ -185,7 +258,9 @@ public class Game extends JFrame implements Runnable{
 	public void rightClick(int x, int y) {
 		x = (int) Math.floor((x + renderer.getCamera().x)/(16.0 *xZoom));
 		y = (int) Math.floor((y + renderer.getCamera().y)/(16.0 *yZoom));
+		if(on == true) {
 		map.removeTile(x, y);
+	}
 	}
 	
 	
@@ -196,9 +271,17 @@ public class Game extends JFrame implements Runnable{
 			super.paint(graphics);
 			
 			map.render(renderer, xZoom, yZoom);
+			
 			for(int i = 0; i < objects.length; i++) {
+				if(i != 5) {
 				objects[i].render(renderer, xZoom, yZoom);
+				} else {
+				if(on == true) {
+					objects[i].render(renderer, xZoom, yZoom);
 			}
+				}
+			}
+			
 			
 			renderer.render(graphics);
 
@@ -210,11 +293,14 @@ public class Game extends JFrame implements Runnable{
 
 	public void changeTile(int tileID) 
 	{
+		if(on == true) {
 		selectedTileID = tileID;
+		}else {
+			selectedTileID = selectedTileID;
+		}
 	}
 
-	public int getSelectedTile()
-	{
+	public int getSelectedTile(){
 		return selectedTileID;
 	}
 	
@@ -223,8 +309,8 @@ public class Game extends JFrame implements Runnable{
 		int i = 0;
 		int x = 0;
 
-		long lastTime = System.nanoTime(); //long 2^63
-		double nanoSecondConversion = 1000000000.0 / 60; //60 frames per second
+		long lastTime = System.nanoTime();
+		double nanoSecondConversion = 1000000000.0 / 60;
 		double changeInSeconds = 0;
 
 		while(true) {
@@ -235,9 +321,18 @@ public class Game extends JFrame implements Runnable{
 				update();
 				changeInSeconds--;
 			}
+			
 
 			render();
 			lastTime = now;
+			
+			guicounter++;
+			if(guicounter >= 30) {
+				guicounter = 0;
+			}
+			updateGUI();
+		//	System.out.println("gui" + guicounter );
+
 		}
 
 	}

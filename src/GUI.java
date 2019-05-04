@@ -12,7 +12,7 @@ public class GUI implements GameObject{
 
 		rect.x = x;
 		rect.y = y;
-		rect2.x =x ;
+		rect2.x = x;
 		rect2.y = y;
 
 		if(backgroundSprite != null) {
@@ -29,21 +29,21 @@ public class GUI implements GameObject{
 	
 	public void render(RenderHandler renderer, int xZoom, int yZoom){
 		if(backgroundSprite != null) {
-			renderer.renderSprite(backgroundSprite, rect.x, rect.y, xZoom, yZoom, fixed);
-		}
-
-		if(buttons != null) {
-			for(int i = 0; i < buttons.length; i++) {
-				buttons[i].render(renderer, xZoom, yZoom, rect);
+				renderer.renderSprite(backgroundSprite, rect.x, rect.y, xZoom, yZoom, fixed);
+			}if(buttons != null) {
+				for(int i = 0; i < buttons.length; i++) {
+					buttons[i].render(renderer, xZoom, yZoom, rect);
+				}
 			}
-		}
+		
 	}
 
 	public void update(Game game){
 		if(buttons != null) {
-			for(int i = 0; i < buttons.length; i++)
-				buttons[i].update(game);
-	}
+			for(int i = 0; i < buttons.length; i++) {
+				buttons[i].update(game);		
+			}
+		}		
 }
 	
 	public boolean handleMouseClick(Rectangle mouseRectangle, Rectangle camera, int xZoom, int yZoom){
