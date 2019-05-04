@@ -34,8 +34,13 @@ The biggest challenge for me was to find a way to delay the time in which mobs "
 KEYS
 -----
 I = interface, mostly map making GUI at the moment
+
 K = Shoots an arrow, you can control the flow of the arrow with w a s d.
+
 W = Move Up
+
 S = Move Down
+
 A = Move Left
+
 D = Move Right
