@@ -172,9 +172,18 @@ public class Game extends JFrame implements Runnable{
 		}
 	}
 	
+	public boolean Wblocked() {}
+	
+	public boolean SBlocked() {}
+	
+	public boolean ABlocked() {}
+	
+	public boolean DBlocked() {}
+	
 	public void update() {
 		arrow.setArrowXY(player.getPlayerX(), player.getPlayerY());
 		arrow.setArrowDirection(player.getPlayerdirection());
+		
 		//System.out.println("ARROW:" + arrow.getX() + "," + arrow.getY());
 		//System.out.println("Cow1: " + cow.getX() + "," + cow.getY());
 		//System.out.println("Cow2: " + cow2.getX() + "," + cow2.getY());
@@ -197,7 +206,6 @@ public class Game extends JFrame implements Runnable{
 			arrow.setBoolShot(false);
 			chick2.hurt();
 		}
-		//hi
 		
 		
 		
