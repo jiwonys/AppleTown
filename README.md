@@ -8,7 +8,7 @@ FEATURES
 :Chicken (mob) with 50 health, randomly chooses what it wants to do, cries when hit by arrow
 :Cow (mob) with 100 health, randomly chooses what it wants to do, cries when hit by arrow
 :Arrow attacking system (actually moves with the character, this was bug at first, but I think it was an interesting to play around with it.
-:Map rendering, saving, and editing
+\n:Map rendering, saving, and editing
 :Map GUI
 :Farmer NPC
 
