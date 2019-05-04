@@ -26,11 +26,6 @@ TODO
 
 :Multiplayer
 
-CHALLENGES
-------------
-The biggest challenge for me was to find a way to delay the time in which mobs "thought" about so it won't go crazy and change animations and x,y randomly every pixel.
-
-
 KEYS
 -----
 I = interface, mostly map making GUI at the moment
